@@ -60,6 +60,8 @@ export class DocumentsController {
           isArray: (name, jpath, isLeafNode) => !isLeafNode,
         });
         return parseXml(xmlData, xmlParser, body);
+      default:
+        throw new BadRequestException('Unsupported extension')
     }
   }
 }
