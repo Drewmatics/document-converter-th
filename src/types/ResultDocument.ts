@@ -1,7 +1,7 @@
 export type ResultDocument = {
-    [key: string]: DocumentElement[]
-}
+  [key: string]: DocumentElement[];
+};
 
 export type DocumentElement = {
-    [key: string]: string
-}
+  [key: string]: string;
+};

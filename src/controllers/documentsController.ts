@@ -1,52 +1,65 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { XMLParser } from "fast-xml-parser";
-import { parseJson } from "src/services/handlers/jsonHandler";
-import { parseString } from "src/services/handlers/stringHandler";
-import { parseXml } from "src/services/handlers/xmlHandler";
-import { getValidationErrors, isDocumentRequestParams } from "src/types/DocumentRequestParams";
+import { parseJson } from "../services/parsers/jsonParser";
+import { parseString } from "../services/parsers/stringParser";
+import { parseXml } from "../services/parsers/xmlParser";
+import {
+  getValidationErrors,
+  isDocumentRequestParams,
+} from "../types/DocumentRequestParams";
 
 @Controller("documents")
 export class DocumentsController {
-  @Get()
-  getAll(): string {
-    return "This action returns all documents";
-  }
-
-  @Get(":id")
-  getById(@Param("id") id: string): string {
-    return `This action returns a single document with id: ${id}`;
-  }
-
-  @Post('parse')
-  @UseInterceptors(FileInterceptor('file'))
+  @Post("parse")
+  @UseInterceptors(FileInterceptor("file"))
   parse(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     if (!isDocumentRequestParams(body)) {
-      throw new BadRequestException(getValidationErrors(body))
+      throw new BadRequestException(getValidationErrors(body));
     }
     switch (file.mimetype) {
-      case 'text/plain':
+      case "text/plain":
+        if (!body.elementSeparator || !body.lineSeparator) {
+          throw new BadRequestException(
+            "Strings require an elementSeparator and a lineSeparator",
+          );
+        }
         //security vulnerability! validate this (XSS)
-        if (body.output == 'string') {
-          throw new BadRequestException('Parsing documents with the same input and output type is not allowed.')
+        if (body.output == "string") {
+          throw new BadRequestException(
+            "Parsing documents with the same input and output type is not allowed.",
+          );
         }
-        let stringData: string = Buffer.from(file.buffer).toString()
-        return parseString(stringData, body)
-      case 'application/json':
-        if (body.output == 'json') {
-          throw new BadRequestException('Parsing documents with the same input and output type is not allowed.')
+        const stringData: string = Buffer.from(file.buffer).toString();
+        return parseString(stringData, body);
+      case "application/json":
+        if (body.output == "json") {
+          throw new BadRequestException(
+            "Parsing documents with the same input and output type is not allowed.",
+          );
         }
-        let jsonData: string = Buffer.from(file.buffer).toString()
-        return parseJson(jsonData, body)
-      case 'application/xml':
-        if (body.output == 'xml') {
-          throw new BadRequestException('Parsing documents with the same input and output type is not allowed.')
+        const jsonData: string = Buffer.from(file.buffer).toString();
+        return parseJson(jsonData, body);
+      case "application/xml":
+        if (body.output == "xml") {
+          throw new BadRequestException(
+            "Parsing documents with the same input and output type is not allowed.",
+          );
         }
-        let xmlData: string = Buffer.from(file.buffer).toString()
+        const xmlData: string = Buffer.from(file.buffer).toString();
         const xmlParser = new XMLParser({
           isArray: (name, jpath, isLeafNode) => !isLeafNode,
-        })
-        return parseXml(xmlData, xmlParser, body)
+        });
+        return parseXml(xmlData, xmlParser, body);
     }
   }
 }
