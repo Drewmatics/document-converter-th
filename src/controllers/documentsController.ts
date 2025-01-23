@@ -2,8 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Get,
-  Param,
+  HttpCode,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -21,6 +20,7 @@ import {
 @Controller("documents")
 export class DocumentsController {
   @Post("parse")
+  @HttpCode(200)
   @UseInterceptors(FileInterceptor("file"))
   parse(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
     if (!isDocumentRequestParams(body)) {

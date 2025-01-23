@@ -129,7 +129,7 @@ describe("DocumentsController", () => {
       body = {
         elementSeparator: "-",
         output: "xml",
-      };
+      } as DocumentRequestParams;
 
       expect(() => controller.parse(file, body)).toThrow(BadRequestException);
     });

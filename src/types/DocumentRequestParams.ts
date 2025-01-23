@@ -1,8 +1,8 @@
 import { DocumentRequestParamsSchema } from "./schemas/DocumentRequestParamsSchema";
 
 export interface DocumentRequestParams {
-  elementSeparator?: string;
-  lineSeparator?: string;
+  elementSeparator: string;
+  lineSeparator: string;
   output: "json" | "string" | "xml";
 }
 

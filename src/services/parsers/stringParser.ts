@@ -4,16 +4,6 @@ import { ResultDocument } from "src/types/ResultDocument";
 import { BadRequestException } from "@nestjs/common";
 
 export function parseString(data: string, body: DocumentRequestParams) {
-  if (!body.lineSeparator) {
-    throw new BadRequestException(
-      "lineSeparator must be included in the request.",
-    );
-  }
-  if (!body.elementSeparator) {
-    throw new BadRequestException(
-      "elementSeparator must be included in the request.",
-    );
-  }
   if (!data.includes(body.lineSeparator)) {
     throw new BadRequestException(
       "At least one line separator must be included in the input string.",

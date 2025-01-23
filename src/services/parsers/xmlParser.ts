@@ -11,7 +11,6 @@ export function parseXml(
 ) {
   try {
     const json = parser.parse(data);
-    //TODO: deal with <?xml version="1.0"?>
     if (!isResultDocument(json)) {
       throw new BadRequestException(
         "The segments and elements of the Document are not in the correct format.",
