@@ -22,7 +22,30 @@ npm run start
 
 You can double check that the Document Converter is up and running by navigating to http://localhost:3000/health and verify that a healthy status is returned.
 
+## Usage Instructions
+Once spun up, you be able to make POST API requests to the following endpoint: http://localhost:3000/documents/parse. Here is an example:
+```
+curl --location 'localhost:3000/documents/parse' \
+--form 'file=@"/Users/drewleung/Downloads/document.xml"' \
+--form 'lineSeparator="~"' \
+--form 'output="json"' \
+--form 'elementSeparator="*"'
+```
 
+The following fields are required:
+- `file`: A link to the file that you want to convert. 
+    - If the file extension is `.txt`, then the file will be treated as a plain text file
+    - If the file extension is `.json`, then the file will be treated as a JSON Object
+    - If the file extension is `.xml`, then the file will be treated as XML
+    - No other extensions are supported currently
+
+- `output`: The file format that you wish to have your data converted to. Only the following values are accepted:
+    - `string`
+    - `json`
+    - `xml`
+
+- `lineSeparator`: The character you want to use to separate your Document's segments when resolving plain text files.
+- `elementSeparator`: The character you want to use to separate your Document's elements within a segment when resolving plain text files.
 
 ## Stay in touch
 
