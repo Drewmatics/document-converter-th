@@ -48,6 +48,60 @@ The following fields are required:
 - `lineSeparator`: The character you want to use to separate your Document's segments when resolving plain text files.
 - `elementSeparator`: The character you want to use to separate your Document's elements within a segment when resolving plain text files.
 
+## Validation
+### JSON and XML Files
+JSON Files should be structured like the following:
+```
+{
+  "ProductID": [
+    {
+      "ProductID1": "4",
+      "ProductID2": "8",
+      "ProductID3": "15",
+      "ProductID4": "16",
+      "ProductID5": "23"
+    },
+    {
+      "ProductID1": "a",
+      "ProductID2": "b",
+      "ProductID3": "c"
+    }
+  ],
+  "AddressID": [
+    {
+      "AddressID1": "42",
+      "AddressID2": "108",
+      "AddressID3": "3",
+      "AddressID4": "14"
+    }
+  ],
+  "ContactID": [
+    {
+      "ContactID1": "59",
+      "ContactID2": "26"
+    }
+  ]
+}
+```
+- Each Segment has a nested array containing their respective Elements
+- Elements MUST be prefixed with their corresponding Segment name. If the Segment is labelled "ProductID", then there cannot be an element in the nested array labelled "AddressID".
+```
+{
+    "message": "Element with name: AddressID1 does not start with its corresponding segment name: ProductID",
+    "error": "Bad Request",
+    "statusCode": 400
+}
+```
+- Each Element MUST be suffixed with an index number. This number starts from 1 and increments up to the number of elements in the array. This is what makes each Element's name unique. For example, if there are 4 elements in a "ProductID" Segment, and one is named "ProductID8", then the Document Converter will return you a 400 Bad Request
+```
+{
+    "message": "Element with name: ProductID8 cannot be tied to its corresponding segment name: ProductID. The element's name must be prefixed with the segment name and suffixed with a number with a maximum of 5.",
+    "error": "Bad Request",
+    "statusCode": 400
+}
+```
+XML Files should follow the same Segment/Element structure. 
+
 ## Stay in touch
 
 - Author - [Drew Leung](https://github.com/drewmatics)
