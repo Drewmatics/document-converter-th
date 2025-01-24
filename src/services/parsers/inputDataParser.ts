@@ -1,6 +1,8 @@
 import { InputElement, InputData } from "src/types/InputData";
 import { XMLBuilder } from "fast-xml-parser";
 import { ParseDocumentParams } from "src/types/ParseDocumentParams";
+import { isValidInputData } from "src/types/schemas/InputDataSchema";
+import { BadRequestException } from "@nestjs/common";
 
 export type OutputJson = InputData;
 
@@ -8,6 +10,11 @@ export function resolveInputData(
   inputData: InputData,
   params: ParseDocumentParams,
 ): string | OutputJson {
+  if (!isValidInputData(inputData)) {
+    throw new BadRequestException(
+      "The segments and elements of the Document are not in the correct format.",
+    );
+  }
   switch (params.output) {
     case "string":
       return getString(inputData, params);

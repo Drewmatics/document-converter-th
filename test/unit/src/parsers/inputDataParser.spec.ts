@@ -1,6 +1,5 @@
 import { InputData } from "src/types/InputData";
 import * as InputDataParser from "../../../../src/services/parsers/inputDataParser";
-import { BadRequestException } from "@nestjs/common";
 import { ParseDocumentParams } from "src/types/ParseDocumentParams";
 
 describe("inputDataParser", () => {

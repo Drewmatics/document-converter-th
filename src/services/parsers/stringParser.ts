@@ -3,6 +3,13 @@ import { OutputJson, resolveInputData } from "./inputDataParser";
 import { InputData } from "src/types/InputData";
 import { BadRequestException } from "@nestjs/common";
 
+/**
+ * Parses a string, validates it, and transforms it into either JSON or XML.
+ *
+ * @param {string} data - The string being converted
+ * @param {ParseDocumentParams} body - Parameters from the API Request
+ * @returns - Either JSON or XML, depending on the body's output parameter.
+ */
 export function parseString(
   data: string,
   body: ParseDocumentParams,

@@ -1,6 +1,14 @@
 import { InputData, InputElement } from "../InputData";
 import { BadRequestException } from "@nestjs/common";
 
+/**
+ * The InputData object represents the data coming from any file type
+ * With this interface, we can easily extend our input and output file types and easily support more
+ * isValidInputData makes sure that the segments and elements are correctly named
+ *
+ * @param {any} inputData - The Document's data
+ * @returns - True if InputData is valid and guards type, throws Bad Requests otherwise
+ */
 export function isValidInputData(inputData: any): inputData is InputData {
   for (const [segmentName, elements] of Object.entries<InputElement[]>(
     inputData,
