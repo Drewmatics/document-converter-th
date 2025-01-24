@@ -43,7 +43,7 @@ The following fields are required:
     - `string`
     - `json`
     - `xml`
-    - Note that the Document Converter will not allow you to convert files if the output file format matches the input (why are you using it otherwise?!)
+    - Note that the Document Converter will not allow you to convert files if the output file format matches the input.
 
 - `lineSeparator`: The character you want to use to separate your Document's segments when resolving plain text files.
 - `elementSeparator`: The character you want to use to separate your Document's elements within a segment when resolving plain text files.
