@@ -7,6 +7,7 @@ import { InputData } from "src/types/InputData";
 import { ParseDocumentParams } from "src/types/ParseDocumentParams";
 import { XMLParser } from "fast-xml-parser";
 import { BadRequestException } from "@nestjs/common";
+import { DocumentsService } from "../../../../src/services/documentsService";
 
 describe("DocumentsController", () => {
   let controller: DocumentsController;
@@ -14,6 +15,7 @@ describe("DocumentsController", () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [DocumentsController],
+      providers: [DocumentsService],
     }).compile();
     jest.spyOn(parseJson, "parseJson").mockImplementation(() => "result");
     jest.spyOn(parseXml, "parseXml").mockImplementation(() => "result");

@@ -22,8 +22,8 @@ export function resolveInputData(
       return inputData;
     case "xml":
       return new XMLBuilder().build({
-        root: inputData
-    });
+        root: inputData,
+      });
   }
 }
 
