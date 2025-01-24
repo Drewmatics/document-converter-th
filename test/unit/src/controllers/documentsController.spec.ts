@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { DocumentsController } from "../../../../src/controllers/documentsController";
-import * as parseJson from "../../../../src/services/parsers/jsonParser";
+import { JsonParser } from "../../../../src/services/parsers/jsonParser";
 import * as parseString from "../../../../src/services/parsers/stringParser";
 import * as parseXml from "../../../../src/services/parsers/xmlParser";
 import { InputData } from "src/types/InputData";
@@ -17,7 +17,10 @@ describe("DocumentsController", () => {
       controllers: [DocumentsController],
       providers: [DocumentsService],
     }).compile();
-    jest.spyOn(parseJson, "parseJson").mockImplementation(() => "result");
+
+    jest
+      .spyOn(JsonParser.prototype, "parse")
+      .mockImplementation(() => "result");
     jest.spyOn(parseXml, "parseXml").mockImplementation(() => "result");
     jest.spyOn(parseString, "parseString").mockImplementation(() => "result");
 
@@ -32,7 +35,7 @@ describe("DocumentsController", () => {
       json = {
         ProductID: [
           {
-            something: "4",
+            ProductID1: "4",
             ProductID2: "8",
             ProductID3: "15",
             ProductID4: "16",
@@ -54,7 +57,7 @@ describe("DocumentsController", () => {
     });
 
     it("Then the JSON parser is called", () => {
-      expect(parseJson.parseJson).toHaveBeenCalledWith(
+      expect(JsonParser.prototype.parse).toHaveBeenCalledWith(
         JSON.stringify(json),
         body,
       );

@@ -1,5 +1,5 @@
 import { InputData } from "src/types/InputData";
-import * as JsonParser from "../../../../src/services/parsers/jsonParser";
+import { JsonParser } from "../../../../src/services/parsers/jsonParser";
 import { BadRequestException } from "@nestjs/common";
 
 describe("jsonParser", () => {
@@ -11,7 +11,9 @@ describe("jsonParser", () => {
     let lineSeparator: string;
     let elementSeparator: string;
     let data: InputData;
+    let jsonParser: JsonParser;
     beforeAll(() => {
+      jsonParser = new JsonParser();
       lineSeparator = "~";
       elementSeparator = "*";
       data = {
@@ -53,7 +55,7 @@ describe("jsonParser", () => {
         ],
       });
       expect(() =>
-        JsonParser.parseJson(invalidData, {
+        jsonParser.parse(invalidData, {
           elementSeparator,
           lineSeparator,
           output: "string",
@@ -62,7 +64,7 @@ describe("jsonParser", () => {
     });
 
     test("A valid XML String is created using the separators when the output is xml", () => {
-      const result: InputData | string = JsonParser.parseJson(
+      const result: InputData | string = jsonParser.parse(
         JSON.stringify(data),
         {
           elementSeparator,
@@ -76,7 +78,7 @@ describe("jsonParser", () => {
     });
 
     test("Empty values and whitespace are handled gracefully", () => {
-      const result: InputData | string = JsonParser.parseJson(
+      const result: InputData | string = jsonParser.parse(
         JSON.stringify({
           ProductID: [
             {
@@ -97,7 +99,7 @@ describe("jsonParser", () => {
     });
 
     test("A valid string is created using the separators when the output is string", () => {
-      const result: InputData | string = JsonParser.parseJson(
+      const result: InputData | string = jsonParser.parse(
         JSON.stringify(data),
         {
           elementSeparator,

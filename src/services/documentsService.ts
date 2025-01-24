@@ -5,7 +5,7 @@ import {
   UploadedFile,
 } from "@nestjs/common";
 import { XMLParser } from "fast-xml-parser";
-import { parseJson } from "../services/parsers/jsonParser";
+import { JsonParser } from "../services/parsers/jsonParser";
 import { parseString } from "../services/parsers/stringParser";
 import { parseXml } from "../services/parsers/xmlParser";
 import {
@@ -35,7 +35,7 @@ export class DocumentsService {
           );
         }
         const jsonData: string = Buffer.from(file.buffer).toString();
-        return parseJson(jsonData, body);
+        return new JsonParser().parse(jsonData, body);
       case "application/xml":
         if (body.output == "xml") {
           throw new BadRequestException(
