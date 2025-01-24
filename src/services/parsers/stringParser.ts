@@ -41,12 +41,14 @@ function transformToInputData(
     }
     const elements: string[] = segment.split(elementSeparator);
     const segmentName: string = elements[0];
-    document[segmentName] = [];
+    if (document[segmentName] == undefined) {
+      document[segmentName] = [];
+    }
+    const element = {};
     elements.slice(1).forEach((value: string, index: number) => {
-      const element = {};
       element[`${segmentName}${index + 1}`] = value;
-      document[segmentName].push(element);
     });
+    document[segmentName].push(element);
   });
   return document;
 }
