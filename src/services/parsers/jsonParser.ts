@@ -8,13 +8,13 @@ export function parseJson(
   body: DocumentRequestParams,
 ): string | OutputJson {
   try {
-    const document = JSON.parse(data);
-    if (!isValidInputData(document)) {
+    const inputData = JSON.parse(data);
+    if (!isValidInputData(inputData)) {
       throw new BadRequestException(
         "The segments and elements of the Document are not in the correct format.",
       );
     }
-    return resolveInputData(document, body);
+    return resolveInputData(inputData, body);
   } catch (err) {
     if (err instanceof SyntaxError) {
       throw new BadRequestException({

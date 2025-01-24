@@ -9,20 +9,11 @@ export function parseXml(
   parser: XMLParser,
   body: DocumentRequestParams,
 ): string | OutputJson {
-  try {
-    const json = parser.parse(data);
-    if (!isValidInputData(json)) {
-      throw new BadRequestException(
-        "The segments and elements of the Document are not in the correct format.",
-      );
-    }
-    return resolveInputData(json, body);
-  } catch (err) {
-    if (err instanceof SyntaxError) {
-      throw new BadRequestException({
-        message: "The XML file is in an invalid format.",
-      });
-    }
-    throw err;
+  const inputData = parser.parse(data);
+  if (!isValidInputData(inputData)) {
+    throw new BadRequestException(
+      "The segments and elements of the Document are not in the correct format.",
+    );
   }
+  return resolveInputData(inputData, body);
 }

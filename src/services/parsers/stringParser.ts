@@ -12,11 +12,15 @@ export function parseString(
       "At least one line separator must be included in the input string.",
     );
   }
-  const document = getDocument(data, body.lineSeparator, body.elementSeparator);
-  return resolveInputData(document, body);
+  const inputData = transformToInputData(
+    data,
+    body.lineSeparator,
+    body.elementSeparator,
+  );
+  return resolveInputData(inputData, body);
 }
 
-function getDocument(
+function transformToInputData(
   data: string,
   lineSeparator: string,
   elementSeparator: string,
