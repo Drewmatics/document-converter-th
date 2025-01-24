@@ -1,5 +1,5 @@
 import { InputData } from "src/types/InputData";
-import { JsonParser } from "../../../../src/services/parsers/jsonParser";
+import { JsonParser } from "../../../../../src/services/parsers/jsonParser";
 import { BadRequestException } from "@nestjs/common";
 
 describe("jsonParser", () => {

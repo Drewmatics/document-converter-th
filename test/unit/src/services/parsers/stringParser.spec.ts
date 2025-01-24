@@ -1,5 +1,5 @@
 import { InputData } from "src/types/InputData";
-import { StringParser } from "../../../../src/services/parsers/stringParser";
+import { StringParser } from "../../../../../src/services/parsers/stringParser";
 import { BadRequestException } from "@nestjs/common";
 
 describe("stringParser", () => {
