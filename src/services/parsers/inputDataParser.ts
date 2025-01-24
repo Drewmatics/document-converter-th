@@ -2,17 +2,19 @@ import { InputElement, InputData } from "src/types/InputData";
 import { XMLBuilder } from "fast-xml-parser";
 import { DocumentRequestParams } from "src/types/ParseDocumentParams";
 
-export function resolveDocument(
-  document: InputData,
+type OutputJson = InputData
+
+export function resolveInputData(
+  inputData: InputData,
   params: DocumentRequestParams,
-): string | InputData {
+): string | OutputJson {
   switch (params.output) {
     case "string":
-      return getString(document, params);
+      return getString(inputData, params);
     case "json":
-      return document;
+      return inputData;
     case "xml":
-      return new XMLBuilder().build(document);
+      return new XMLBuilder().build(inputData);
   }
 }
 

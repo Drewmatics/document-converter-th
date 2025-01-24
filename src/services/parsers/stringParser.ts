@@ -1,5 +1,5 @@
 import { DocumentRequestParams } from "src/types/ParseDocumentParams";
-import { resolveDocument } from "../handlers/documentHandler";
+import { resolveInputData } from "./inputDataParser";
 import { InputData } from "src/types/InputData";
 import { BadRequestException } from "@nestjs/common";
 
@@ -10,7 +10,7 @@ export function parseString(data: string, body: DocumentRequestParams) {
     );
   }
   const document = getDocument(data, body.lineSeparator, body.elementSeparator);
-  return resolveDocument(document, body);
+  return resolveInputData(document, body);
 }
 
 function getDocument(
