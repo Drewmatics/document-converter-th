@@ -28,12 +28,6 @@ export class DocumentsController {
     }
     switch (file.mimetype) {
       case "text/plain":
-        if (!body.elementSeparator || !body.lineSeparator) {
-          throw new BadRequestException(
-            "Strings require an elementSeparator and a lineSeparator",
-          );
-        }
-        //security vulnerability! validate this (XSS)
         if (body.output == "string") {
           throw new BadRequestException(
             "Parsing documents with the same input and output type is not allowed.",
@@ -61,7 +55,7 @@ export class DocumentsController {
         });
         return parseXml(xmlData, xmlParser, body);
       default:
-        throw new BadRequestException('Unsupported extension')
+        throw new BadRequestException("Unsupported extension");
     }
   }
 }
