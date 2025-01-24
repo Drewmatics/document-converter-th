@@ -1,11 +1,8 @@
-import { z } from "zod";
-import { ResultDocument, DocumentElement } from "../ResultDocument";
+import { InputData, InputElement } from "../InputData";
 import { BadRequestException } from "@nestjs/common";
 
-export const ElementsSchema = z.record(z.string(), z.array(z.string()));
-
-export function isResultDocument(document: any): document is ResultDocument {
-  for (const [segmentName, elements] of Object.entries<DocumentElement[]>(
+export function isValidInputData(document: any): document is InputData {
+  for (const [segmentName, elements] of Object.entries<InputElement[]>(
     document,
   )) {
     for (const element of elements) {

@@ -1,11 +1,11 @@
-import { DocumentElement, ResultDocument } from "src/types/ResultDocument";
+import { InputElement, InputData } from "src/types/InputData";
 import { XMLBuilder } from "fast-xml-parser";
-import { DocumentRequestParams } from "src/types/DocumentRequestParams";
+import { DocumentRequestParams } from "src/types/ParseDocumentParams";
 
 export function resolveDocument(
-  document: ResultDocument,
+  document: InputData,
   params: DocumentRequestParams,
-): string | ResultDocument {
+): string | InputData {
   switch (params.output) {
     case "string":
       return getString(document, params);
@@ -17,12 +17,12 @@ export function resolveDocument(
 }
 
 function getString(
-  document: ResultDocument,
+  document: InputData,
   params: DocumentRequestParams,
 ): string {
   let result: string = "";
-  const segments = Object.entries<DocumentElement[]>(document);
-  segments.forEach(([segmentName, elements]: [string, DocumentElement[]]) => {
+  const segments = Object.entries<InputElement[]>(document);
+  segments.forEach(([segmentName, elements]: [string, InputElement[]]) => {
     result += segmentName;
     for (const element of elements) {
       for (const [name, value] of Object.entries(element)) {

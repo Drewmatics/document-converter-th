@@ -1,5 +1,5 @@
 import { z } from "zod";
-export const DocumentRequestParamsSchema = z.object({
+export const ParseDocumentParamsSchema = z.object({
   elementSeparator: z
     .string({
       message: "An elementSeparator as a single character is required.",

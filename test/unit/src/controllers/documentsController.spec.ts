@@ -3,8 +3,8 @@ import { DocumentsController } from "../../../../src/controllers/documentsContro
 import * as parseJson from "../../../../src/services/parsers/jsonParser";
 import * as parseString from "../../../../src/services/parsers/stringParser";
 import * as parseXml from "../../../../src/services/parsers/xmlParser";
-import { ResultDocument } from "src/types/ResultDocument";
-import { DocumentRequestParams } from "src/types/DocumentRequestParams";
+import { InputData } from "src/types/InputData";
+import { DocumentRequestParams } from "src/types/ParseDocumentParams";
 import { XMLParser } from "fast-xml-parser";
 import { BadRequestException } from "@nestjs/common";
 
@@ -23,7 +23,7 @@ describe("DocumentsController", () => {
   });
 
   describe("When a JSON file is sent", () => {
-    let result: ResultDocument | string | undefined;
+    let result: InputData | string | undefined;
     let json: any;
     let body: DocumentRequestParams;
     beforeEach(() => {
@@ -65,7 +65,7 @@ describe("DocumentsController", () => {
   });
 
   describe("When an XML file is sent", () => {
-    let result: ResultDocument | string | undefined;
+    let result: InputData | string | undefined;
     let xml: string;
     let body: DocumentRequestParams;
     beforeEach(() => {
@@ -100,7 +100,7 @@ describe("DocumentsController", () => {
   });
 
   describe("When a String file is sent", () => {
-    let result: ResultDocument | string | undefined;
+    let result: InputData | string | undefined;
     let str: string;
     let body: DocumentRequestParams;
     let file: Express.Multer.File;

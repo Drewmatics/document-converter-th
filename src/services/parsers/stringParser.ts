@@ -1,6 +1,6 @@
-import { DocumentRequestParams } from "src/types/DocumentRequestParams";
+import { DocumentRequestParams } from "src/types/ParseDocumentParams";
 import { resolveDocument } from "../handlers/documentHandler";
-import { ResultDocument } from "src/types/ResultDocument";
+import { InputData } from "src/types/InputData";
 import { BadRequestException } from "@nestjs/common";
 
 export function parseString(data: string, body: DocumentRequestParams) {
@@ -17,8 +17,8 @@ function getDocument(
   data: string,
   lineSeparator: string,
   elementSeparator: string,
-): ResultDocument {
-  const document: ResultDocument = {};
+): InputData {
+  const document: InputData = {};
   data = removeLineBreaks(data);
   const segments: string[] = data.split(lineSeparator);
   segments.forEach((segment: string) => {

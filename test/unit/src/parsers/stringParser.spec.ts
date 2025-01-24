@@ -1,4 +1,4 @@
-import { ResultDocument } from "src/types/ResultDocument";
+import { InputData } from "src/types/InputData";
 import * as StringParser from "../../../../src/services/parsers/stringParser";
 import { BadRequestException } from "@nestjs/common";
 
@@ -28,7 +28,7 @@ describe("stringParser", () => {
 
     test("A valid XML String is created using the separators when the output is xml", () => {
       const data: string = `ProductID*4*23~ProductID*a*b*c*d*e~AddressID*42*108~`;
-      const result: ResultDocument | string = StringParser.parseString(data, {
+      const result: InputData | string = StringParser.parseString(data, {
         elementSeparator,
         lineSeparator,
         output: "xml",
@@ -40,7 +40,7 @@ describe("stringParser", () => {
 
     test("A valid JSON object is created using the separators when the output is json", () => {
       const data: string = `ProductID*4*23~ProductID*a*b*c*d*e~AddressID*42*108~`;
-      const result: ResultDocument | string = StringParser.parseString(data, {
+      const result: InputData | string = StringParser.parseString(data, {
         elementSeparator,
         lineSeparator,
         output: "json",

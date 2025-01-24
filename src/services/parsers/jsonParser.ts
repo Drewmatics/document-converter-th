@@ -1,12 +1,12 @@
 import { BadRequestException } from "@nestjs/common";
-import { DocumentRequestParams } from "src/types/DocumentRequestParams";
-import { isResultDocument } from "../../types/schemas/ResultDocumentSchema";
+import { DocumentRequestParams } from "src/types/ParseDocumentParams";
+import { isValidInputData } from "../../types/schemas/InputDataSchema";
 import { resolveDocument } from "../handlers/documentHandler";
 
 export function parseJson(data: string, body: DocumentRequestParams) {
   try {
     const document = JSON.parse(data);
-    if (!isResultDocument(document)) {
+    if (!isValidInputData(document)) {
       throw new BadRequestException(
         "The segments and elements of the Document are not in the correct format.",
       );

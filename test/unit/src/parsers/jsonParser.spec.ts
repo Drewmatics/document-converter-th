@@ -1,4 +1,4 @@
-import { ResultDocument } from "src/types/ResultDocument";
+import { InputData } from "src/types/InputData";
 import * as JsonParser from "../../../../src/services/parsers/jsonParser";
 import { BadRequestException } from "@nestjs/common";
 
@@ -10,7 +10,7 @@ describe("jsonParser", () => {
   describe("Given I have a line and element separators", () => {
     let lineSeparator: string;
     let elementSeparator: string;
-    let data: ResultDocument;
+    let data: InputData;
     beforeAll(() => {
       lineSeparator = "~";
       elementSeparator = "*";
@@ -43,7 +43,7 @@ describe("jsonParser", () => {
       };
     });
 
-    test("A BadRequestException is thrown the JSON is not a valid ResultDocument", () => {
+    test("A BadRequestException is thrown if the JSON is not valid input data", () => {
       const invalidData = JSON.stringify({
         ProductID: [
           {
@@ -72,7 +72,7 @@ describe("jsonParser", () => {
     });
 
     test("A valid XML String is created using the separators when the output is xml", () => {
-      const result: ResultDocument | string = JsonParser.parseJson(
+      const result: InputData | string = JsonParser.parseJson(
         JSON.stringify(data),
         {
           elementSeparator,
@@ -86,7 +86,7 @@ describe("jsonParser", () => {
     });
 
     test("A valid string is created using the separators when the output is string", () => {
-      const result: ResultDocument | string = JsonParser.parseJson(
+      const result: InputData | string = JsonParser.parseJson(
         JSON.stringify(data),
         {
           elementSeparator,

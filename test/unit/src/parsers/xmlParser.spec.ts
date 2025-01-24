@@ -1,4 +1,4 @@
-import { ResultDocument } from "src/types/ResultDocument";
+import { InputData } from "src/types/InputData";
 import * as XmlParser from "../../../../src/services/parsers/xmlParser";
 import { BadRequestException } from "@nestjs/common";
 import { XMLParser } from "fast-xml-parser";
@@ -42,7 +42,7 @@ describe("xmlParser", () => {
 </AddressID>`;
     });
 
-    test("A BadRequestException is thrown when the XML is not a valid ResultDocument", () => {
+    test("A BadRequestException is thrown when the XML is not valid input data", () => {
       const invalidXml: string = `<AddressID>
 	<invalid1>42</invalid1>
 </AddressID>
@@ -59,7 +59,7 @@ describe("xmlParser", () => {
     });
 
     test("A valid String is created using the separators when the output is string", () => {
-      const result: ResultDocument | string = XmlParser.parseXml(
+      const result: InputData | string = XmlParser.parseXml(
         xmlData,
         xmlParser,
         {
@@ -74,7 +74,7 @@ describe("xmlParser", () => {
     });
 
     test("A valid JSON object is created using the separators when the output is json", () => {
-      const result: ResultDocument | string = XmlParser.parseXml(
+      const result: InputData | string = XmlParser.parseXml(
         xmlData,
         xmlParser,
         {

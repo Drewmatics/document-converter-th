@@ -1,4 +1,4 @@
-import { DocumentRequestParamsSchema } from "./schemas/DocumentRequestParamsSchema";
+import { ParseDocumentParamsSchema } from "./schemas/ParseDocumentParamsSchema";
 
 export interface DocumentRequestParams {
   elementSeparator: string;
@@ -9,12 +9,12 @@ export interface DocumentRequestParams {
 export function isDocumentRequestParams(
   params: any,
 ): params is DocumentRequestParams {
-  const result = DocumentRequestParamsSchema.safeParse(params).success;
+  const result = ParseDocumentParamsSchema.safeParse(params).success;
   return result;
 }
 
 export function getValidationErrors(params: any): string[] | undefined {
-  return DocumentRequestParamsSchema.safeParse(params).error?.errors.map(
+  return ParseDocumentParamsSchema.safeParse(params).error?.errors.map(
     (error) => error.message,
   );
 }

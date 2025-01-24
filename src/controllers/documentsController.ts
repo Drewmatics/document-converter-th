@@ -15,7 +15,7 @@ import { parseXml } from "../services/parsers/xmlParser";
 import {
   getValidationErrors,
   isDocumentRequestParams,
-} from "../types/DocumentRequestParams";
+} from "../types/ParseDocumentParams";
 
 @Controller("documents")
 export class DocumentsController {
