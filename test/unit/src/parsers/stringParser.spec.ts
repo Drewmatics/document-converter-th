@@ -34,7 +34,7 @@ describe("stringParser", () => {
         output: "xml",
       });
       expect(result).toEqual(
-        "<ProductID><ProductID1>4</ProductID1><ProductID2>23</ProductID2></ProductID><ProductID><ProductID1>a</ProductID1><ProductID2>b</ProductID2><ProductID3>c</ProductID3><ProductID4>d</ProductID4><ProductID5>e</ProductID5></ProductID><AddressID><AddressID1>42</AddressID1><AddressID2>108</AddressID2></AddressID>",
+        "<root><ProductID><ProductID1>4</ProductID1><ProductID2>23</ProductID2></ProductID><ProductID><ProductID1>a</ProductID1><ProductID2>b</ProductID2><ProductID3>c</ProductID3><ProductID4>d</ProductID4><ProductID5>e</ProductID5></ProductID><AddressID><AddressID1>42</AddressID1><AddressID2>108</AddressID2></AddressID></root>",
       );
     });
 

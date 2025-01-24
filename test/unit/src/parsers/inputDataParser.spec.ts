@@ -80,7 +80,7 @@ describe("inputDataParser", () => {
       body.output = "xml";
       const result = InputDataParser.resolveInputData(data, body);
       expect(result).toEqual(
-        "<ProductID><ProductID1>a</ProductID1><ProductID2>b</ProductID2></ProductID><ProductID><ProductID1>c</ProductID1><ProductID2>d</ProductID2><ProductID3>e</ProductID3></ProductID>",
+        "<root><ProductID><ProductID1>a</ProductID1><ProductID2>b</ProductID2></ProductID><ProductID><ProductID1>c</ProductID1><ProductID2>d</ProductID2><ProductID3>e</ProductID3></ProductID></root>",
       );
     });
   });

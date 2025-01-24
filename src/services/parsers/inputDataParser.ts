@@ -21,7 +21,9 @@ export function resolveInputData(
     case "json":
       return inputData;
     case "xml":
-      return new XMLBuilder().build(inputData);
+      return new XMLBuilder().build({
+        root: inputData
+    });
   }
 }
 

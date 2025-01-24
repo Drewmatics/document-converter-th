@@ -3,7 +3,7 @@ import { BadRequestException } from "@nestjs/common";
 
 /**
  * The InputData object represents the data coming from any file type
- * With this interface, we can easily extend our input and output file types and easily support more
+ * With this interface, we can easily extend and support more input and output file types
  * isValidInputData makes sure that the segments and elements are correctly named
  *
  * @param {any} inputData - The Document's data
