@@ -4,7 +4,7 @@ import * as parseJson from "../../../../src/services/parsers/jsonParser";
 import * as parseString from "../../../../src/services/parsers/stringParser";
 import * as parseXml from "../../../../src/services/parsers/xmlParser";
 import { InputData } from "src/types/InputData";
-import { DocumentRequestParams } from "src/types/ParseDocumentParams";
+import { ParseDocumentParams } from "src/types/ParseDocumentParams";
 import { XMLParser } from "fast-xml-parser";
 import { BadRequestException } from "@nestjs/common";
 
@@ -25,7 +25,7 @@ describe("DocumentsController", () => {
   describe("When a JSON file is sent", () => {
     let result: InputData | string | undefined;
     let json: any;
-    let body: DocumentRequestParams;
+    let body: ParseDocumentParams;
     beforeEach(() => {
       json = {
         ProductID: [
@@ -67,7 +67,7 @@ describe("DocumentsController", () => {
   describe("When an XML file is sent", () => {
     let result: InputData | string | undefined;
     let xml: string;
-    let body: DocumentRequestParams;
+    let body: ParseDocumentParams;
     beforeEach(() => {
       xml = `<ProductID>
     <ProductID1>4</ProductID1>
@@ -102,7 +102,7 @@ describe("DocumentsController", () => {
   describe("When a String file is sent", () => {
     let result: InputData | string | undefined;
     let str: string;
-    let body: DocumentRequestParams;
+    let body: ParseDocumentParams;
     let file: Express.Multer.File;
     beforeEach(() => {
       str = `ProductID*4*8*15*16*23~ProductID*a*b*c*d*e~AddressID*42*108*3*14~ContactID*59*26~`;
@@ -129,7 +129,7 @@ describe("DocumentsController", () => {
       body = {
         elementSeparator: "-",
         output: "xml",
-      } as DocumentRequestParams;
+      } as ParseDocumentParams;
 
       expect(() => controller.parse(file, body)).toThrow(BadRequestException);
     });

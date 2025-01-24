@@ -1,11 +1,11 @@
-import { DocumentRequestParams } from "src/types/ParseDocumentParams";
+import { ParseDocumentParams } from "src/types/ParseDocumentParams";
 import { OutputJson, resolveInputData } from "./inputDataParser";
 import { InputData } from "src/types/InputData";
 import { BadRequestException } from "@nestjs/common";
 
 export function parseString(
   data: string,
-  body: DocumentRequestParams,
+  body: ParseDocumentParams,
 ): string | OutputJson {
   if (!data.includes(body.lineSeparator)) {
     throw new BadRequestException(

@@ -1,6 +1,6 @@
 import { ParseDocumentParamsSchema } from "./schemas/ParseDocumentParamsSchema";
 
-export interface DocumentRequestParams {
+export interface ParseDocumentParams {
   elementSeparator: string;
   lineSeparator: string;
   output: "json" | "string" | "xml";
@@ -8,7 +8,7 @@ export interface DocumentRequestParams {
 
 export function isDocumentRequestParams(
   params: any,
-): params is DocumentRequestParams {
+): params is ParseDocumentParams {
   const result = ParseDocumentParamsSchema.safeParse(params).success;
   return result;
 }

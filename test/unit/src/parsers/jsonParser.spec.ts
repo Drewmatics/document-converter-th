@@ -18,25 +18,15 @@ describe("jsonParser", () => {
         ProductID: [
           {
             ProductID1: "a",
-          },
-          {
             ProductID2: "b",
-          },
-          {
             ProductID3: "c",
-          },
-          {
             ProductID4: "d",
-          },
-          {
             ProductID5: "e",
           },
         ],
         AddressID: [
           {
             AddressID1: "42",
-          },
-          {
             AddressID2: "108",
           },
         ],
@@ -81,8 +71,29 @@ describe("jsonParser", () => {
         },
       );
       expect(result).toEqual(
-        "<ProductID><ProductID1>a</ProductID1></ProductID><ProductID><ProductID2>b</ProductID2></ProductID><ProductID><ProductID3>c</ProductID3></ProductID><ProductID><ProductID4>d</ProductID4></ProductID><ProductID><ProductID5>e</ProductID5></ProductID><AddressID><AddressID1>42</AddressID1></AddressID><AddressID><AddressID2>108</AddressID2></AddressID>",
+        "<ProductID><ProductID1>a</ProductID1><ProductID2>b</ProductID2><ProductID3>c</ProductID3><ProductID4>d</ProductID4><ProductID5>e</ProductID5></ProductID><AddressID><AddressID1>42</AddressID1><AddressID2>108</AddressID2></AddressID>",
       );
+    });
+
+    test("Empty values and whitespace are handled gracefully", () => {
+      const result: InputData | string = JsonParser.parseJson(
+        JSON.stringify({
+          ProductID: [
+            {
+              ProductID1: "",
+              ProductID2: "   Hello ",
+              ProductID3: "",
+              ProductID4: "123",
+            },
+          ],
+        }),
+        {
+          elementSeparator,
+          lineSeparator,
+          output: "string",
+        },
+      );
+      expect(result).toEqual("ProductID**   Hello **123~");
     });
 
     test("A valid string is created using the separators when the output is string", () => {
