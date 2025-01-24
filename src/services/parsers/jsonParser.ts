@@ -1,8 +1,7 @@
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { ParseDocumentParams } from "src/types/ParseDocumentParams";
-import { OutputJson, resolveInputData } from "./inputDataParser";
+import { OutputJson, resolveInputData } from "../helpers/resolveInputData";
 import { Parser } from "./parser";
-
 /**
  * Parses a JSON Object, validates it, and transforms it into either plain-text or XML.
  *

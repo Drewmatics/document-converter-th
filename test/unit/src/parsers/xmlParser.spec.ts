@@ -1,7 +1,6 @@
 import { InputData } from "src/types/InputData";
-import * as XmlParser from "../../../../src/services/parsers/xmlParser";
+import { XmlParser } from "../../../../src/services/parsers/xmlParser";
 import { BadRequestException } from "@nestjs/common";
-import { XMLParser } from "fast-xml-parser";
 
 describe("xmlParser", () => {
   afterEach(() => {
@@ -12,11 +11,9 @@ describe("xmlParser", () => {
     let lineSeparator: string;
     let elementSeparator: string;
     let xmlData: string;
-    let xmlParser: XMLParser;
+    let xmlParser: XmlParser;
     beforeAll(() => {
-      xmlParser = new XMLParser({
-        isArray: (name, jpath, isLeafNode) => !isLeafNode,
-      });
+      xmlParser = new XmlParser();
       lineSeparator = "~";
       elementSeparator = "*";
       xmlData = `<ProductID>
@@ -53,7 +50,7 @@ describe("xmlParser", () => {
 	<AddressID2>108</AddressID2>
 </AddressID>`;
       expect(() =>
-        XmlParser.parseXml(invalidXml, xmlParser, {
+        xmlParser.parse(invalidXml, {
           elementSeparator,
           lineSeparator,
           output: "json",
@@ -70,9 +67,8 @@ describe("xmlParser", () => {
 <ProductID2>5</ProductID2>
 </ProductID>
 </root>`;
-      const result: InputData | string = XmlParser.parseXml(
+      const result: InputData | string = xmlParser.parse(
         xmlWithRootAndVersionTags,
-        xmlParser,
         {
           elementSeparator,
           lineSeparator,
@@ -90,30 +86,22 @@ describe("xmlParser", () => {
     });
 
     test("A valid String is created using the separators when the output is string", () => {
-      const result: InputData | string = XmlParser.parseXml(
-        xmlData,
-        xmlParser,
-        {
-          elementSeparator,
-          lineSeparator,
-          output: "string",
-        },
-      );
+      const result: InputData | string = xmlParser.parse(xmlData, {
+        elementSeparator,
+        lineSeparator,
+        output: "string",
+      });
       expect(result).toEqual(
         "ProductID*4*8*15*16*23~ProductID*a*b*c*d*e~AddressID*42*108*3*14~ContactID*59*26~",
       );
     });
 
     test("A valid JSON object is created using the separators when the output is json", () => {
-      const result: InputData | string = XmlParser.parseXml(
-        xmlData,
-        xmlParser,
-        {
-          elementSeparator,
-          lineSeparator,
-          output: "json",
-        },
-      );
+      const result: InputData | string = xmlParser.parse(xmlData, {
+        elementSeparator,
+        lineSeparator,
+        output: "json",
+      });
       expect(result).toEqual({
         ProductID: [
           {

@@ -1,5 +1,5 @@
 import { InputData } from "src/types/InputData";
-import * as InputDataParser from "../../../../src/services/parsers/inputDataParser";
+import * as InputDataParser from "../../../../src/services/helpers/resolveInputData";
 import { ParseDocumentParams } from "src/types/ParseDocumentParams";
 
 describe("inputDataParser", () => {

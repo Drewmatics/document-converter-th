@@ -1,8 +1,9 @@
-import { InputElement, InputData } from "src/types/InputData";
-import { XMLBuilder } from "fast-xml-parser";
+import { InputData } from "src/types/InputData";
 import { ParseDocumentParams } from "src/types/ParseDocumentParams";
 import { isValidInputData } from "../../types/schemas/InputDataSchema";
 import { BadRequestException } from "@nestjs/common";
+import { StringFormatter } from "../formatters/stringFormatter";
+import { XMLBuilder } from "fast-xml-parser";
 
 export type OutputJson = InputData;
 
@@ -17,7 +18,7 @@ export function resolveInputData(
   }
   switch (params.output) {
     case "string":
-      return getString(inputData, params);
+      return new StringFormatter().format(inputData, params);
     case "json":
       return inputData;
     case "xml":
@@ -25,19 +26,4 @@ export function resolveInputData(
         root: inputData,
       });
   }
-}
-
-function getString(document: InputData, params: ParseDocumentParams): string {
-  let result: string = "";
-  const segments = Object.entries<InputElement[]>(document);
-  segments.forEach(([segmentName, elements]: [string, InputElement[]]) => {
-    for (const element of elements) {
-      result += segmentName;
-      for (const [name, value] of Object.entries(element)) {
-        result += `${params.elementSeparator}${value}`;
-      }
-      result += params.lineSeparator;
-    }
-  });
-  return result;
 }

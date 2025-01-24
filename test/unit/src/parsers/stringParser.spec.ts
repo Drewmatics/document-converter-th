@@ -1,5 +1,5 @@
 import { InputData } from "src/types/InputData";
-import * as StringParser from "../../../../src/services/parsers/stringParser";
+import { StringParser } from "../../../../src/services/parsers/stringParser";
 import { BadRequestException } from "@nestjs/common";
 
 describe("stringParser", () => {
@@ -10,7 +10,9 @@ describe("stringParser", () => {
   describe("Given I have a line and element separators", () => {
     let lineSeparator: string;
     let elementSeparator: string;
+    let stringParser: StringParser;
     beforeAll(() => {
+      stringParser = new StringParser();
       lineSeparator = "~";
       elementSeparator = "*";
     });
@@ -18,7 +20,7 @@ describe("stringParser", () => {
     test("A BadRequestException is thrown when the string does not contain the line separator", () => {
       const data: string = `ProductID*4*23`;
       expect(() =>
-        StringParser.parseString(data, {
+        stringParser.parse(data, {
           elementSeparator,
           lineSeparator,
           output: "json",
@@ -28,7 +30,7 @@ describe("stringParser", () => {
 
     test("A valid XML String is created using the separators when the output is xml", () => {
       const data: string = `ProductID*4*23~ProductID*a*b*c*d*e~AddressID*42*108~`;
-      const result: InputData | string = StringParser.parseString(data, {
+      const result: InputData | string = stringParser.parse(data, {
         elementSeparator,
         lineSeparator,
         output: "xml",
@@ -40,7 +42,7 @@ describe("stringParser", () => {
 
     test("A valid JSON object is created using the separators when the output is json", () => {
       const data: string = `ProductID*4*23~ProductID*a*b*c*d*e~`;
-      const result: InputData | string = StringParser.parseString(data, {
+      const result: InputData | string = stringParser.parse(data, {
         elementSeparator,
         lineSeparator,
         output: "json",
@@ -61,7 +63,7 @@ describe("stringParser", () => {
 
     test("A valid JSON object is created using the separators with multiple keys when the output is json", () => {
       const data: string = `ProductID*4*23~ProductID*a*b*c*d*e~AddressID*123*456~`;
-      const json: InputData | string = StringParser.parseString(data, {
+      const json: InputData | string = stringParser.parse(data, {
         elementSeparator,
         lineSeparator,
         output: "json",

@@ -1,11 +1,10 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { DocumentsController } from "../../../../src/controllers/documentsController";
 import { JsonParser } from "../../../../src/services/parsers/jsonParser";
-import * as parseString from "../../../../src/services/parsers/stringParser";
-import * as parseXml from "../../../../src/services/parsers/xmlParser";
+import { StringParser } from "../../../../src/services/parsers/stringParser";
+import { XmlParser } from "../../../../src/services/parsers/xmlParser";
 import { InputData } from "src/types/InputData";
 import { ParseDocumentParams } from "src/types/ParseDocumentParams";
-import { XMLParser } from "fast-xml-parser";
 import { BadRequestException } from "@nestjs/common";
 import { DocumentsService } from "../../../../src/services/documentsService";
 
@@ -21,8 +20,10 @@ describe("DocumentsController", () => {
     jest
       .spyOn(JsonParser.prototype, "parse")
       .mockImplementation(() => "result");
-    jest.spyOn(parseXml, "parseXml").mockImplementation(() => "result");
-    jest.spyOn(parseString, "parseString").mockImplementation(() => "result");
+    jest.spyOn(XmlParser.prototype, "parse").mockImplementation(() => "result");
+    jest
+      .spyOn(StringParser.prototype, "parse")
+      .mockImplementation(() => "result");
 
     controller = module.get<DocumentsController>(DocumentsController);
   });
@@ -95,11 +96,7 @@ describe("DocumentsController", () => {
     });
 
     it("Then the XML parser is called", () => {
-      expect(parseXml.parseXml).toHaveBeenCalledWith(
-        xml,
-        expect.any(XMLParser),
-        body,
-      );
+      expect(XmlParser.prototype.parse).toHaveBeenCalledWith(xml, body);
       expect(result).toEqual("result");
     });
   });
@@ -126,7 +123,7 @@ describe("DocumentsController", () => {
     it("Then the String parser is called", () => {
       result = controller.parse(file, body);
 
-      expect(parseString.parseString).toHaveBeenCalledWith(str, body);
+      expect(StringParser.prototype.parse).toHaveBeenCalledWith(str, body);
       expect(result).toEqual("result");
     });
 

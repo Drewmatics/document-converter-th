@@ -1,7 +1,8 @@
 import { ParseDocumentParams } from "src/types/ParseDocumentParams";
-import { OutputJson, resolveInputData } from "./inputDataParser";
+import { OutputJson, resolveInputData } from "../helpers/resolveInputData";
 import { InputData } from "src/types/InputData";
 import { BadRequestException } from "@nestjs/common";
+import { Parser } from "./parser";
 
 /**
  * Parses a string, validates it, and transforms it into either JSON or XML.
@@ -10,21 +11,20 @@ import { BadRequestException } from "@nestjs/common";
  * @param {ParseDocumentParams} body - Parameters from the API Request
  * @returns - Either JSON or XML, depending on the body's output parameter.
  */
-export function parseString(
-  data: string,
-  body: ParseDocumentParams,
-): string | OutputJson {
-  if (!data.includes(body.lineSeparator)) {
-    throw new BadRequestException(
-      "At least one line separator must be included in the input string.",
+export class StringParser implements Parser {
+  parse(data: string, body: ParseDocumentParams): string | OutputJson {
+    if (!data.includes(body.lineSeparator)) {
+      throw new BadRequestException(
+        "At least one line separator must be included in the input string.",
+      );
+    }
+    const inputData = transformToInputData(
+      data,
+      body.lineSeparator,
+      body.elementSeparator,
     );
+    return resolveInputData(inputData, body);
   }
-  const inputData = transformToInputData(
-    data,
-    body.lineSeparator,
-    body.elementSeparator,
-  );
-  return resolveInputData(inputData, body);
 }
 
 function transformToInputData(

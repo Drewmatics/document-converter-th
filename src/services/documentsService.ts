@@ -4,10 +4,9 @@ import {
   Injectable,
   UploadedFile,
 } from "@nestjs/common";
-import { XMLParser } from "fast-xml-parser";
 import { JsonParser } from "../services/parsers/jsonParser";
-import { parseString } from "../services/parsers/stringParser";
-import { parseXml } from "../services/parsers/xmlParser";
+import { StringParser } from "../services/parsers/stringParser";
+import { XmlParser } from "../services/parsers/xmlParser";
 import {
   getValidationErrors,
   isDocumentRequestParams,
@@ -27,7 +26,7 @@ export class DocumentsService {
           );
         }
         const stringData: string = Buffer.from(file.buffer).toString();
-        return parseString(stringData, body);
+        return new StringParser().parse(stringData, body);
       case "application/json":
         if (body.output == "json") {
           throw new BadRequestException(
@@ -43,10 +42,8 @@ export class DocumentsService {
           );
         }
         const xmlData: string = Buffer.from(file.buffer).toString();
-        const xmlParser = new XMLParser({
-          isArray: (name, jpath, isLeafNode) => !isLeafNode,
-        });
-        return parseXml(xmlData, xmlParser, body);
+
+        return new XmlParser().parse(xmlData, body);
       default:
         throw new BadRequestException("Unsupported extension");
     }
