@@ -1,9 +1,12 @@
 import { BadRequestException } from "@nestjs/common";
 import { DocumentRequestParams } from "src/types/ParseDocumentParams";
 import { isValidInputData } from "../../types/schemas/InputDataSchema";
-import { resolveInputData } from "./inputDataParser";
+import { OutputJson, resolveInputData } from "./inputDataParser";
 
-export function parseJson(data: string, body: DocumentRequestParams) {
+export function parseJson(
+  data: string,
+  body: DocumentRequestParams,
+): string | OutputJson {
   try {
     const document = JSON.parse(data);
     if (!isValidInputData(document)) {

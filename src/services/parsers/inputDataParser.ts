@@ -2,7 +2,7 @@ import { InputElement, InputData } from "src/types/InputData";
 import { XMLBuilder } from "fast-xml-parser";
 import { DocumentRequestParams } from "src/types/ParseDocumentParams";
 
-type OutputJson = InputData
+export type OutputJson = InputData;
 
 export function resolveInputData(
   inputData: InputData,
@@ -18,10 +18,7 @@ export function resolveInputData(
   }
 }
 
-function getString(
-  document: InputData,
-  params: DocumentRequestParams,
-): string {
+function getString(document: InputData, params: DocumentRequestParams): string {
   let result: string = "";
   const segments = Object.entries<InputElement[]>(document);
   segments.forEach(([segmentName, elements]: [string, InputElement[]]) => {

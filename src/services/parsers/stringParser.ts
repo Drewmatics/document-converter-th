@@ -1,9 +1,12 @@
 import { DocumentRequestParams } from "src/types/ParseDocumentParams";
-import { resolveInputData } from "./inputDataParser";
+import { OutputJson, resolveInputData } from "./inputDataParser";
 import { InputData } from "src/types/InputData";
 import { BadRequestException } from "@nestjs/common";
 
-export function parseString(data: string, body: DocumentRequestParams) {
+export function parseString(
+  data: string,
+  body: DocumentRequestParams,
+): string | OutputJson {
   if (!data.includes(body.lineSeparator)) {
     throw new BadRequestException(
       "At least one line separator must be included in the input string.",

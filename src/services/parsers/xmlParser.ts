@@ -1,14 +1,14 @@
 import { BadRequestException } from "@nestjs/common";
 import { DocumentRequestParams } from "src/types/ParseDocumentParams";
 import { isValidInputData } from "../../types/schemas/InputDataSchema";
-import { resolveInputData } from "./inputDataParser";
+import { OutputJson, resolveInputData } from "./inputDataParser";
 import { XMLParser } from "fast-xml-parser";
 
 export function parseXml(
   data: string,
   parser: XMLParser,
   body: DocumentRequestParams,
-) {
+): string | OutputJson {
   try {
     const json = parser.parse(data);
     if (!isValidInputData(json)) {

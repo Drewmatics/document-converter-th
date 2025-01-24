@@ -1,9 +1,9 @@
 import { InputData, InputElement } from "../InputData";
 import { BadRequestException } from "@nestjs/common";
 
-export function isValidInputData(document: any): document is InputData {
+export function isValidInputData(inputData: any): inputData is InputData {
   for (const [segmentName, elements] of Object.entries<InputElement[]>(
-    document,
+    inputData,
   )) {
     for (const element of elements) {
       for (const [name] of Object.entries(element)) {
@@ -12,9 +12,11 @@ export function isValidInputData(document: any): document is InputData {
             `Element with name: ${name} does not start with its corresponding segment name: ${segmentName}`,
           );
         }
-        let index = name.substring(segmentName.length)
+        const index = name.substring(segmentName.length);
         if (!Number.isInteger(+index)) {
-          throw new BadRequestException(`Element with name: ${name} cannot be tied to its corresponding segment name: ${segmentName}. The element's name must be prefixed with the segment name and suffixed with a number.`)
+          throw new BadRequestException(
+            `Element with name: ${name} cannot be tied to its corresponding segment name: ${segmentName}. The element's name must be prefixed with the segment name and suffixed with a number.`,
+          );
         }
       }
     }
